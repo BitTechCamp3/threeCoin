@@ -37,7 +37,7 @@
 > | `coinSym` |  varchar  | 코인 심볼     | O |
 > | `coinName` |  varchar  | 코인 풀네임     | O |
   
-##### Responses
+##### Regist Responses
 
 > | name   |  type      | Description      | Required |
 > |--------|------------|----------------|---|
@@ -46,26 +46,11 @@
 > | `coinName` |  varchar  | 코인 풀네임     | O |
 > | `useYn` |  boolean  | 제외 여부     | O |
 
-</details>
-
-<details>
-  <summary>
-    <code>POST</code> 
-    <code><b>/coin/hide</b></code> 
-    <code>(제외 코인 삭제)</code>
-  </summary>
-
-##### Request
+##### Delete Responses
 
 > | name   |  type      | Description      | Required |
 > |--------|------------|----------------|---|
-> | `coinSym` |  varchar  | 코인 심볼     | O |
   
-##### Responses
-
-> | name   |  type      | Description      | Required |
-> |--------|------------|----------------|---|
-
 </details>
 
 <details>
@@ -107,7 +92,7 @@
 > | `coinSym` |  varchar  | 코인 심볼     | O |
 
   
-##### Register Responses
+##### Registe Responses
 
 > | name   |  type      | Description      | Required |
 > |--------|------------|----------------|---|
