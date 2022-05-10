@@ -18,7 +18,7 @@ public class R2dbcConfig extends AbstractR2dbcConfiguration {
         log.info(">>>>dbConnection");
         return MySqlConnectionFactory.from(
                 MySqlConnectionConfiguration.builder().host("127.0.0.1")
-                        .password("root").port(3306).database("coin").username("root").build()
+                        .password("devez105571!").port(3306).database("test").username("root").build()
         );
     }
 }

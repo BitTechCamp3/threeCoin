@@ -51,8 +51,9 @@ public class CoinHandler {
 
     // 관심 코인 조회
     public Mono<ServerResponse> getFavoriteCoins(ServerRequest request) {
-
-        Mono<Favorites> favoritesMono = favoritesService.getFavoriteCoins(request.queryParam("userId").toString());
+        Flux<Favorites> favoritesMono = request.bodyToFlux(Favorites.class)
+                .flatMap(favorites -> favoritesService.getFavoriteCoins(favorites))
+                .log();
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)

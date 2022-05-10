@@ -3,8 +3,8 @@ package com.team.three.coin.service.impl;
 import com.team.three.coin.entity.Favorites;
 import com.team.three.coin.repository.FavoritesRepository;
 import com.team.three.coin.service.FavoritesService;
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -17,22 +17,22 @@ public class FavoritesServiceImpl implements FavoritesService {
     }
 
     @Override
-    public Mono<Favorites> getFavoriteCoins(String userId) {
+    public Flux<Favorites> getFavoriteCoins(Favorites favorites) {
+        String userId = favorites.getUserId();
         return favoritesRepository.findFavoriteCoinsByUserId(userId);
     }
 
     @Override
     public Mono<Favorites> updateFavoriteCoin(Favorites favorites) {
-        String userId = favorites.getUserId();
+        String userId  = favorites.getUserId();
         String coinSym = favorites.getCoinSym();
-        System.out.println(favorites);
         return favoritesRepository.countFavoriteCoinByUserIdAndCoinSym(userId, coinSym)
-                .doOnNext(data -> System.out.println("sout : " + data))
-                .flatMap(favoritesMono -> {
-                    System.out.println(favoritesMono);
-                    System.out.println("getCoinSym() : " + favoritesMono.getCoinSym());
-                    if (favoritesMono.getCoinSym() == null) return favoritesRepository.save(favorites);
-                    else return favoritesRepository.deleteFavoriteCoin(userId, coinSym);
+                .hasElement()
+                .flatMap(existed -> {
+                    if(existed)
+                        return favoritesRepository.deleteFavoriteCoin(userId, coinSym);
+                    else
+                        return favoritesRepository.save(favorites);
                 }).log();
     }
 

@@ -22,6 +22,4 @@ public class Favorites {
 
     @Column(value ="coinSym")
     private String coinSym;
-
-    private int existedCnt;
 }
