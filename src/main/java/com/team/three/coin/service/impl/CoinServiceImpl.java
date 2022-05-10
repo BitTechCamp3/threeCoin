@@ -22,13 +22,22 @@ public class CoinServiceImpl implements CoinService {
     }
 
     @Override
-    public Mono<Coin> getCoinByCoinSymbol(String coinSym) {
-        return coinRepository.findByCoinSym(coinSym);
+    public Flux<Coin> getCoinLists() {
+        return coinRepository.findAll();
     }
 
     @Override
-    public Flux<Coin> getCoinLists() {
-        return coinRepository.findAll();
+    public Mono<Coin> updateVisibleCoin(Coin coin) {
+        String coinSym = coin.getCoinSym();
+
+        return coinRepository.findByCoinSym(coinSym)
+                .hasElement()
+                .flatMap(existed -> {
+                    if(existed)
+                        return coinRepository.deleteVisibleCoin( coinSym);
+                    else
+                        return coinRepository.save(coin);
+                }).log();
     }
 
     @Override

@@ -37,10 +37,7 @@ public class CoinHandler {
     // 코인 노출 ON/OFF
     public Mono<ServerResponse> updateCoinVisibleStatus(ServerRequest request) {
         Mono<Coin> coinMono = request.bodyToMono(Coin.class)
-                .flatMap(coin -> {
-                    if (coin.getCoinName() == null) return coinService.deleteVisibleCoin(coin);
-                    else  return coinService.createVisibleCoin(coin);
-                }).log();
+                .flatMap(coinService::updateVisibleCoin).log();
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
